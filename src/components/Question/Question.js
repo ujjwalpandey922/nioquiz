@@ -93,7 +93,7 @@ function Question({
 
         <div className="singleQuestion">
           <h3>
-            <MathJax>{questions[currentQuestion]?.Question}</MathJax>
+            <MathJax inline dynamic>{questions[currentQuestion]?.Question}</MathJax>
           </h3>
 
           <div className="controls">
