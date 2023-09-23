@@ -5,7 +5,7 @@ function Header() {
   return (
     <div className="header">
       <Link to="/" className="title">
-        Intuative Quiz Zone
+        NeoClass Quiz Zone       
       </Link>
       <hr
         style={{

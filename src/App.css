@@ -1,17 +1,18 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-a{
+a {
   text-decoration: inherit;
   color: inherit;
 }
-.App{
+.App {
   background-image: url("../public/bg.jpg");
-  background-color: rgb(255, 0, 0);
   min-height: 98vh;
   border: 8px solid rgba(1, 0, 11, 0.689);
   margin: 4px;
   padding: 5px;
+  /* backdrop-filter: blur(20%); Adjust the blur value as needed */
 }
+

@@ -2,40 +2,48 @@ import { CircularProgress } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Question from "../../components/Question/Question";
 import "./Quiz.css";
-function Quiz({ name, questions, setQuestions, score, setScore }) {
-  const [options, setoptions] = useState();
+function Quiz({ name, questions, setQuestions, time, setTime }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   useEffect(() => {
-    setoptions(
-      questions &&
-        handleShuffle([
-          questions[currentQuestion]?.correct_answer,
-          ...questions[currentQuestion]?.incorrect_answers,
-        ])
-    );
+    setTime(questions.length * 5 * 60);
+  }, [questions]);
+ 
+  useEffect(() => {
+    const overallTimer = setTimeout(() => {
+      if (time > 0) {
+        setTime((pre) => pre - 1);
+      }
+    }, 1000);
+    // Clear the timer when time reaches 0
+    if (time === 0) {
+      clearTimeout(overallTimer);
+    }
+    return () => clearTimeout(overallTimer);
     // eslint-disable-next-line
-  }, [questions, currentQuestion]);
-  const handleShuffle = (optionsAll) => {
-    return optionsAll.sort(() => Math.random() - 0.5);
+  }, [time]);
+  const timeRemainingFn = (time) => {
+    let min = 0;
+    let sec = 0;
+    min = Math.floor((time)/60);
+    sec = Math.floor((time) % 60);
+    return `${min} M : ${sec} Sec`;
   };
-
   return (
     <div className="quiz">
       <span className="subTitle">Welcome : {name}</span>
-      {questions ? (
+      {time ? (
         <>
           <div className="quizInfo">
-            <span>{questions[currentQuestion].category}</span>
-            <span>Score : {score}</span>
+            <span>{questions[currentQuestion]?.QuestionID}</span>
+            <span>Total Time Remaining : {timeRemainingFn(time)}</span>
           </div>
           <Question
             questions={questions}
             currentQuestion={currentQuestion}
             setCurrentQuestion={setCurrentQuestion}
-            options={options}
-            score={score}
-            setScore={setScore}
-            correctAns={questions[currentQuestion]?.correct_answer}
+            time={time}
+            timeRemainingFn={timeRemainingFn}
+            setQuestions={setQuestions}
           />
         </>
       ) : (

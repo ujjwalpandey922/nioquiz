@@ -2,21 +2,22 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Categories from "../../Category/Categories";
 import "./Home.css";
-import { Button, MenuItem } from "@mui/material";
+import { Button, FormControl, MenuItem,  OutlinedInput,  Select } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Error from "../../components/Error/Error";
 function Home({ name, setName, fetchQuiz }) {
-  const [category, setCategory] = useState("");
-  const [difficulty, setDifficulty] = useState("");
+  const [category, setCategory] = useState([]);
   const [error, setError] = useState(false);
   const NavTo = useNavigate();
   const handleSubmit = () => {
-    if (!name || !category || !difficulty) {
+    if (!name || !category) {
       setError(true);
       return;
     } else {
       setError(false);
-      fetchQuiz(category, difficulty);
+      category.forEach((element) => {
+        fetchQuiz(element);
+      });
       NavTo("/quiz");
     }
   };
@@ -28,45 +29,31 @@ function Home({ name, setName, fetchQuiz }) {
           {error && <Error>please enter all the fields</Error>}
           <TextField
             id="Name"
-            label="Enter Your Name..."
             variant="outlined"
-            style={{ paddingBottom: 10 }}
+            placeholder="Enter Name Please..."
+            InputProps={{
+              style: { color: "white", fontSize: "24px" }, // Set the text color to white
+            }}
             onChange={(e) => setName(e.target.value)}
           />
-          <TextField
-            select
+          <Select
+            multiple
             id="category"
-            label="Select Category"
             variant="outlined"
-            style={{ paddingBottom: 10 }}
+            style={{ color: "white", fontSize: "24px" }}
             onChange={(e) => setCategory(e.target.value)}
             value={category}
           >
+            <MenuItem disabled value="">
+              Select Questions
+            </MenuItem>
             {Categories.map((e) => (
               <MenuItem key={e.category} value={e.value}>
                 {e.category}
               </MenuItem>
             ))}
-          </TextField>
-          <TextField
-            select
-            id="difficulty"
-            label="Select Difficulty"
-            variant="outlined"
-            style={{ paddingBottom: 10 }}
-            onChange={(e) => setDifficulty(e.target.value)}
-            value={difficulty}
-          >
-            <MenuItem value="easy" key="easy">
-              Easy
-            </MenuItem>
-            <MenuItem value="medium" key="medium">
-              Medium
-            </MenuItem>
-            <MenuItem value="hard" key="hard">
-              Hard
-            </MenuItem>
-          </TextField>
+          </Select>
+
           <Button
             variant="contained"
             color="primary"

@@ -4,4 +4,8 @@
     justify-content: center;
     flex-direction: column;
     height: 60vh;
+    gap: 2rem;
+}
+.timeTaken{
+    font-size: 2rem;
 }

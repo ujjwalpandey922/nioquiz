@@ -8,18 +8,18 @@ import { useState } from "react";
 
 function App() {
   const [name, setName] = useState("");
-  const [questions, setQuestions] = useState();
-  const [score, setScore] = useState(0);
-  const fetchQuiz = async (category = "", difficulty = "") => {
+  const [questions, setQuestions] = useState([]);
+  const [time, setTime] = useState(0);
+  const fetchQuiz = async (category) => {
     const res = await fetch(
-      `https://opentdb.com/api.php?amount=10${
-        category && `&category=${category}`
-      }${difficulty && `&difficulty=${difficulty}`}&type=multiple`
+      `https://0h8nti4f08.execute-api.ap-northeast-1.amazonaws.com/getQuestionDetails/getquestiond
+etails?QuestionID=${category}`
     );
     const data = await res.json();
-    setQuestions(data.results);
+    console.log(data);
+    setQuestions((prev) => [ ...prev, data[0]]);
   };
-
+  
   return (
     <Router>
       <div className="App">
@@ -37,15 +37,23 @@ function App() {
               <Quiz
                 name={name}
                 questions={questions}
-                score={score}
-                setScore={setScore}
+                time={time}
+                setTime={setTime}
                 setQuestions={setQuestions}
               />
             }
           ></Route>
           <Route
             path="/result"
-            element={<Results score={score} name={name} setScore={setScore} />}
+            element={
+              <Results
+                name={name}
+                time={time}
+                setTime={setTime}
+                setQuestions={setQuestions}
+                questions={questions}
+              />
+            }
           ></Route>
         </Routes>
       </div>
