@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Categories from "../../Category/Categories";
 import "./Home.css";
-import { Button, FormControl, MenuItem,  OutlinedInput,  Select } from "@mui/material";
+import { Button,  MenuItem,    Select } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Error from "../../components/Error/Error";
 function Home({ name, setName, fetchQuiz }) {

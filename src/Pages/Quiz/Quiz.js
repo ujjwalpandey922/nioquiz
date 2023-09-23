@@ -6,6 +6,7 @@ function Quiz({ name, questions, setQuestions, time, setTime }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   useEffect(() => {
     setTime(questions.length * 5 * 60);
+    // eslint-disable-next-line
   }, [questions]);
  
   useEffect(() => {

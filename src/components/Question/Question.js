@@ -33,7 +33,7 @@ function Question({
     return () => {
       clearInterval(timer);
     };
-    
+    // eslint-disable-next-line
   }, [currentQuestion, questions]);
   //changing time elapsed with every sec
   useEffect(() => {
